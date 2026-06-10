@@ -757,5 +757,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     showNext();
     setInterval(showNext, 38000 + Math.random() * 8000);
-  }, 3000);
+  }, 8000);
 })();
