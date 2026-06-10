@@ -680,3 +680,82 @@ document.addEventListener('DOMContentLoaded', () => {
   resize();
   draw();
 })();
+
+/* =====================
+   SOCIAL PROOF NOTIFICATIONS
+   ===================== */
+(function () {
+  const EVENTS = [
+    { name: 'Rafael Pereira',   city: 'Simão Dias',    product: 'iPhone 16 128GB',      model: 'iPhone 16' },
+    { name: 'Camila Santos',    city: 'Lagarto',       product: 'iPhone 15 Pro 256GB',   model: 'iPhone 15 Pro' },
+    { name: 'Lucas Oliveira',   city: 'Itabaiana',     product: 'iPhone 14 256GB',       model: 'iPhone 14' },
+    { name: 'Ana Ferreira',     city: 'Aracaju',       product: 'iPhone 16 256GB',       model: 'iPhone 16' },
+    { name: 'Marcos Costa',     city: 'Estância',      product: 'iPhone 15 128GB',       model: 'iPhone 15' },
+    { name: 'Juliana Lima',     city: 'Simão Dias',    product: 'iPhone 14 128GB',       model: 'iPhone 14' },
+    { name: 'Pedro Alves',      city: 'Tobias Barreto','product': 'iPhone 15 Pro 256GB', model: 'iPhone 15 Pro' },
+    { name: 'Fernanda Rocha',   city: 'São Cristóvão', product: 'iPhone 16 128GB',       model: 'iPhone 16' },
+    { name: 'Thiago Mendes',    city: 'Lagarto',       product: 'iPhone 14 256GB',       model: 'iPhone 14' },
+    { name: 'Beatriz Souza',    city: 'Simão Dias',    product: 'iPhone 15 128GB',       model: 'iPhone 15' },
+  ];
+
+  const TIMES = [
+    'há 2 min', 'há 5 min', 'há 8 min', 'há 11 min',
+    'há 14 min', 'há 18 min', 'há 22 min', 'há 27 min',
+  ];
+
+  const MODEL_COLORS = {
+    'iPhone 14':     ['#2d1f4e','#4a3580'],
+    'iPhone 15':     ['#222','#333'],
+    'iPhone 15 Pro': ['#bdb8ae','#9e9990'],
+    'iPhone 16':     ['#e8e4dc','#ccc8c0'],
+  };
+
+  function getPhoneSVG(model) {
+    const c = MODEL_COLORS[model] || ['#222','#333'];
+    return `<svg viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="5" width="80" height="190" rx="18" fill="${c[0]}" stroke="${c[1]}" stroke-width="2"/>
+      <rect x="18" y="16" width="64" height="138" rx="7" fill="${c[0]}aa"/>
+      <rect x="42" y="8" width="16" height="4" rx="2" fill="${c[1]}"/>
+    </svg>`;
+  }
+
+  function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  const el        = document.getElementById('sp-notification');
+  const elImg     = document.getElementById('sp-img');
+  const elName    = document.getElementById('sp-name');
+  const elAction  = document.getElementById('sp-action');
+  const elTime    = document.getElementById('sp-time');
+
+  if (!el) return;
+
+  let used = [];
+
+  function showNext() {
+    if (used.length === EVENTS.length) used = [];
+
+    // pega evento não usado recentemente
+    let evt;
+    do { evt = rand(EVENTS); } while (used.includes(evt.name));
+    used.push(evt.name);
+
+    elImg.innerHTML    = getPhoneSVG(evt.model);
+    elName.textContent = evt.name;
+    elAction.innerHTML = `comprou <strong>${evt.product}</strong>`;
+    elTime.textContent = `${evt.city} • ${rand(TIMES)}`;
+
+    // entrada
+    el.classList.add('show');
+
+    // saída após 4s
+    setTimeout(() => {
+      el.classList.remove('show');
+    }, 4000);
+  }
+
+  // Primeira notificação após 8s, depois a cada 35-45s
+  setTimeout(() => {
+    showNext();
+    setInterval(showNext, 38000 + Math.random() * 8000);
+  }, 8000);
+})();
