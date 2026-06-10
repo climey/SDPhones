@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin — SD Phones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.admin-wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+.admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+.admin-title { font-size: 20px; font-weight: 500; color: var(--text); }
+.admin-subtitle { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.admin-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+.admin-table th { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); padding: 10px 14px; text-align: left; border-bottom: 0.5px solid var(--border); }
+.admin-table td { font-size: 12px; color: var(--text2); padding: 12px 14px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
+.admin-table tr:hover td { background: var(--bg2); }
+.admin-table .td-name { font-weight: 500; color: var(--text); }
+.admin-badge { font-size: 9px; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
+.form-section { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+.form-section h3 { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 20px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
+.form-input {
+  background: var(--bg);
+  border: 0.5px solid var(--border2);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--text);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--text3); }
+.form-input::placeholder { color: var(--text4); }
+.form-full { grid-column: 1 / -1; }
+.form-actions { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.login-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 16px; padding: 40px; width: 100%; max-width: 360px; text-align: center; }
+.login-logo { margin-bottom: 28px; }
+.login-title { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.login-sub { font-size: 12px; color: var(--text3); margin-bottom: 28px; }
+.login-form { display: flex; flex-direction: column; gap: 12px; }
+.error-msg { font-size: 12px; color: #ef4444; margin-top: 8px; }
+.img-preview { width: 60px; height: 60px; border-radius: 8px; background: var(--bg3); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+.img-preview img { width: 90%; height: 90%; object-fit: contain; }
+.td-actions { display: flex; gap: 8px; }
+.btn-icon { background: transparent; border: 0.5px solid var(--border); color: var(--text3); border-radius: 6px; padding: 5px 10px; font-size: 11px; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.btn-icon:hover { border-color: var(--border2); color: var(--text); }
+.btn-icon.danger:hover { border-color: #ef4444; color: #ef4444; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-sd" style="font-size:18px;letter-spacing:6px;color:var(--text);">SD</div>
+      <div class="logo-phones" style="font-size:9px;letter-spacing:10px;color:var(--text3);">P H O N E S</div>
+    </div>
+    <div class="login-title">Painel Admin</div>
+    <div class="login-sub">Acesso restrito</div>
+    <div class="login-form">
+      <input class="form-input" type="password" id="login-pass" placeholder="Senha" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <button class="btn-primary" style="width:100%" onclick="doLogin()">Entrar</button>
+      <div class="error-msg hidden" id="login-error">Senha incorreta.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL -->
+<div class="hidden" id="admin-panel">
+  <header class="nav">
+    <div class="nav-logo">
+      <span class="logo-sd">SD</span>
+      <span class="logo-phones">P H O N E S</span>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn-secondary" style="font-size:11px;padding:7px 14px;border-radius:8px;">← Ver loja</a>
+      <button class="btn-secondary" style="font-size:11px;padding:7px 14px;border-radius:8px;" onclick="doLogout()">Sair</button>
+    </div>
+  </header>
+
+  <div class="admin-wrap">
+
+    <!-- HEADER -->
+    <div class="admin-header">
+      <div>
+        <div class="admin-title">Produtos</div>
+        <div class="admin-subtitle">Gerencie o catálogo da SD Phones</div>
+      </div>
+      <button class="btn-primary" onclick="showForm()">+ Novo produto</button>
+    </div>
+
+    <!-- FORM CADASTRO/EDIÇÃO -->
+    <div class="form-section hidden" id="form-section">
+      <h3 id="form-title">Novo produto</h3>
+      <input type="hidden" id="edit-id"/>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Modelo</label>
+          <select class="form-input" id="f-model">
+            <option>iPhone 13 Mini</option>
+            <option>iPhone 13</option>
+            <option>iPhone 14</option>
+            <option>iPhone 14 Pro</option>
+            <option>iPhone 14 Pro Max</option>
+            <option>iPhone 15</option>
+            <option>iPhone 15 Pro</option>
+            <option>iPhone 15 Pro Max</option>
+            <option>iPhone 16</option>
+            <option>iPhone 16 Pro</option>
+            <option>iPhone 16 Pro Max</option>
+            <option>Acessórios</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nome completo</label>
+          <input class="form-input" id="f-name" placeholder="Ex: iPhone 14 256GB"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cor</label>
+          <input class="form-input" id="f-color" placeholder="Ex: Roxo"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Armazenamento</label>
+          <select class="form-input" id="f-storage">
+            <option>64GB</option>
+            <option>128GB</option>
+            <option>256GB</option>
+            <option>512GB</option>
+            <option>1TB</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">RAM</label>
+          <select class="form-input" id="f-ram">
+            <option>4GB</option>
+            <option>6GB</option>
+            <option>8GB</option>
+            <option>12GB</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Câmera principal</label>
+          <input class="form-input" id="f-camera" placeholder="Ex: 48MP"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Bateria</label>
+          <input class="form-input" id="f-battery" placeholder="Ex: 3279mAh"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Condição</label>
+          <select class="form-input" id="f-condition">
+            <option>Novo</option>
+            <option>Seminovo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preço (R$)</label>
+          <input class="form-input" id="f-price" type="number" placeholder="Ex: 3190"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preço original (R$)</label>
+          <input class="form-input" id="f-price-old" type="number" placeholder="Ex: 3490"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">URL da imagem</label>
+          <input class="form-input" id="f-image" placeholder="https://..." oninput="previewImg(this.value)"/>
+        </div>
+        <div class="form-group" style="align-items:flex-start;padding-top:18px;">
+          <div class="img-preview" id="img-preview">
+            <span style="font-size:20px;opacity:0.2;">📷</span>
+          </div>
+        </div>
+        <div class="form-group form-full">
+          <label class="form-label">Descrição</label>
+          <textarea class="form-input" id="f-desc" rows="3" placeholder="Descreva o produto..."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" onclick="saveProduct()">Salvar produto</button>
+        <button class="btn-secondary" onclick="hideForm()">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- TABELA -->
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Condição</th>
+          <th>Preço</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="admin-table-body"></tbody>
+    </table>
+
+    <!-- CONFIGURAÇÕES -->
+    <div class="form-section">
+      <h3>Configurações da loja</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">WhatsApp (com DDI)</label>
+          <input class="form-input" id="cfg-wpp" placeholder="5579999999999"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Instagram</label>
+          <input class="form-input" id="cfg-ig" placeholder="sdphones"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nome do atendente</label>
+          <input class="form-input" id="cfg-attendant" placeholder="Cleberton"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nova senha admin</label>
+          <input class="form-input" type="password" id="cfg-pass" placeholder="Deixe em branco para manter"/>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" onclick="saveConfig()">Salvar configurações</button>
+      </div>
+    </div>
+
+    <!-- RESET -->
+    <div style="text-align:center;padding:20px 0 40px;">
+      <button class="btn-icon danger" onclick="if(confirm('Restaurar produtos padrão?')) { localStorage.removeItem('sdphones_products'); renderTable(); alert('Restaurado!'); }">
+        Restaurar produtos padrão
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const ADMIN_PASS_KEY = 'sdphones_admin_pass';
+const DEFAULT_PASS = 'sdphones2024';
+const STORAGE_KEYS = { products: 'sdphones_products', config: 'sdphones_config' };
+
+const DEFAULT_PRODUCTS = [
+  { id:'1', model:'iPhone 13', name:'iPhone 13 128GB', color:'Meia-noite', storage:'128GB', ram:'6GB', camera:'12MP', battery:'3227mAh', condition:'Seminovo', price:2190, priceOld:2490, image:'', description:'iPhone 13 em excelente estado. Bateria com saúde acima de 85%. Desbloqueado.' },
+  { id:'2', model:'iPhone 14', name:'iPhone 14 256GB', color:'Roxo', storage:'256GB', ram:'6GB', camera:'12MP', battery:'3279mAh', condition:'Novo', price:3190, priceOld:3490, image:'', description:'iPhone 14 novo, lacrado. Factory unlocked. Garantia de 1 ano.' },
+  { id:'3', model:'iPhone 15 Pro', name:'iPhone 15 Pro 256GB', color:'Titânio Natural', storage:'256GB', ram:'8GB', camera:'48MP', battery:'3274mAh', condition:'Novo', price:4990, priceOld:5490, image:'', description:'iPhone 15 Pro com câmera de 48MP, chip A17 Pro e corpo em titânio.' },
+  { id:'4', model:'iPhone 14 Pro', name:'iPhone 14 Pro 256GB', color:'Dourado', storage:'256GB', ram:'6GB', camera:'48MP', battery:'3200mAh', condition:'Seminovo', price:4490, priceOld:4890, image:'', description:'iPhone 14 Pro seminovo. Câmera 48MP. Bateria 88%.' },
+  { id:'5', model:'iPhone 16', name:'iPhone 16 128GB', color:'Branco', storage:'128GB', ram:'8GB', camera:'48MP', battery:'3650mAh', condition:'Novo', price:5190, priceOld:5490, image:'', description:'iPhone 16 lançamento 2024. Chip A18, câmera 48MP.' },
+  { id:'6', model:'iPhone 13', name:'iPhone 13 256GB', color:'Estelar', storage:'256GB', ram:'6GB', camera:'12MP', battery:'3227mAh', condition:'Seminovo', price:2490, priceOld:2790, image:'', description:'iPhone 13 256GB seminovo. Excelente custo-benefício.' },
+];
+
+function getPass() { return localStorage.getItem(ADMIN_PASS_KEY) || DEFAULT_PASS; }
+function getProducts() { const r = localStorage.getItem(STORAGE_KEYS.products); return r ? JSON.parse(r) : DEFAULT_PRODUCTS; }
+function saveProducts(p) { localStorage.setItem(STORAGE_KEYS.products, JSON.stringify(p)); }
+function getConfig() { const r = localStorage.getItem(STORAGE_KEYS.config); return r ? JSON.parse(r) : { wpp:'5579999999999', ig:'sdphones', attendant:'Cleberton' }; }
+function saveConfig2(c) { localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(c)); }
+function formatPrice(n) { return 'R$ ' + Number(n).toLocaleString('pt-BR'); }
+
+function doLogin() {
+  const v = document.getElementById('login-pass').value;
+  if (v === getPass()) {
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('admin-panel').classList.remove('hidden');
+    renderTable();
+    loadConfig();
+  } else {
+    document.getElementById('login-error').classList.remove('hidden');
+  }
+}
+
+function doLogout() {
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.getElementById('admin-panel').classList.add('hidden');
+  document.getElementById('login-pass').value = '';
+}
+
+function renderTable() {
+  const products = getProducts();
+  const body = document.getElementById('admin-table-body');
+  if (!products.length) {
+    body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:24px;">Nenhum produto cadastrado.</td></tr>';
+    return;
+  }
+  body.innerHTML = products.map(p => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="img-preview" style="width:40px;height:40px;">
+            ${p.image ? `<img src="${p.image}" alt="${p.name}"/>` : '<span style="font-size:16px;opacity:0.2;">📱</span>'}
+          </div>
+          <div>
+            <div class="td-name">${p.name} · ${p.color}</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:2px;">${p.model} · ${p.storage}</div>
+          </div>
+        </div>
+      </td>
+      <td><span class="admin-badge ${p.condition === 'Novo' ? 'badge-new' : 'badge-used'}">${p.condition}</span></td>
+      <td>${formatPrice(p.price)}</td>
+      <td>
+        <div class="td-actions">
+          <button class="btn-icon" onclick="editProduct('${p.id}')">Editar</button>
+          <button class="btn-icon danger" onclick="deleteProduct('${p.id}')">Excluir</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function showForm(clear = true) {
+  if (clear) {
+    document.getElementById('edit-id').value = '';
+    document.getElementById('form-title').textContent = 'Novo produto';
+    ['f-name','f-color','f-camera','f-battery','f-price','f-price-old','f-image','f-desc'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('img-preview').innerHTML = '<span style="font-size:20px;opacity:0.2;">📷</span>';
+  }
+  document.getElementById('form-section').classList.remove('hidden');
+  document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function hideForm() {
+  document.getElementById('form-section').classList.add('hidden');
+}
+
+function previewImg(url) {
+  const el = document.getElementById('img-preview');
+  if (url) el.innerHTML = `<img src="${url}" alt="preview" onerror="this.parentElement.innerHTML='<span style=\\'font-size:20px;opacity:0.2;\\'>❌</span>'"/>`;
+  else el.innerHTML = '<span style="font-size:20px;opacity:0.2;">📷</span>';
+}
+
+function saveProduct() {
+  const id = document.getElementById('edit-id').value;
+  const product = {
+    id: id || Date.now().toString(),
+    model: document.getElementById('f-model').value,
+    name: document.getElementById('f-name').value,
+    color: document.getElementById('f-color').value,
+    storage: document.getElementById('f-storage').value,
+    ram: document.getElementById('f-ram').value,
+    camera: document.getElementById('f-camera').value,
+    battery: document.getElementById('f-battery').value,
+    condition: document.getElementById('f-condition').value,
+    price: Number(document.getElementById('f-price').value),
+    priceOld: Number(document.getElementById('f-price-old').value) || 0,
+    image: document.getElementById('f-image').value,
+    description: document.getElementById('f-desc').value,
+  };
+
+  if (!product.name || !product.price) {
+    alert('Preencha pelo menos o nome e o preço.');
+    return;
+  }
+
+  const products = getProducts();
+  if (id) {
+    const idx = products.findIndex(p => p.id === id);
+    if (idx !== -1) products[idx] = product;
+  } else {
+    products.unshift(product);
+  }
+
+  saveProducts(products);
+  renderTable();
+  hideForm();
+}
+
+function editProduct(id) {
+  const products = getProducts();
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('edit-id').value = p.id;
+  document.getElementById('form-title').textContent = 'Editar produto';
+  document.getElementById('f-model').value = p.model;
+  document.getElementById('f-name').value = p.name;
+  document.getElementById('f-color').value = p.color;
+  document.getElementById('f-storage').value = p.storage;
+  document.getElementById('f-ram').value = p.ram;
+  document.getElementById('f-camera').value = p.camera;
+  document.getElementById('f-battery').value = p.battery;
+  document.getElementById('f-condition').value = p.condition;
+  document.getElementById('f-price').value = p.price;
+  document.getElementById('f-price-old').value = p.priceOld || '';
+  document.getElementById('f-image').value = p.image || '';
+  document.getElementById('f-desc').value = p.description || '';
+  previewImg(p.image);
+  showForm(false);
+}
+
+function deleteProduct(id) {
+  if (!confirm('Excluir este produto?')) return;
+  const products = getProducts().filter(p => p.id !== id);
+  saveProducts(products);
+  renderTable();
+}
+
+function loadConfig() {
+  const c = getConfig();
+  document.getElementById('cfg-wpp').value = c.wpp || '';
+  document.getElementById('cfg-ig').value = c.ig || '';
+  document.getElementById('cfg-attendant').value = c.attendant || '';
+}
+
+function saveConfig() {
+  const c = {
+    wpp: document.getElementById('cfg-wpp').value,
+    ig: document.getElementById('cfg-ig').value,
+    attendant: document.getElementById('cfg-attendant').value,
+  };
+  saveConfig2(c);
+  const newPass = document.getElementById('cfg-pass').value;
+  if (newPass) {
+    localStorage.setItem(ADMIN_PASS_KEY, newPass);
+    document.getElementById('cfg-pass').value = '';
+  }
+  alert('Configurações salvas!');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.getElementById('login-pass').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+});
+</script>
+</body>
+</html>
