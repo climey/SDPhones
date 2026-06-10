@@ -686,16 +686,16 @@ document.addEventListener('DOMContentLoaded', () => {
    ===================== */
 (function () {
   const EVENTS = [
-    { name: 'Rafael Pereira',   city: 'Simão Dias',    product: 'iPhone 16 128GB',      model: 'iPhone 16' },
-    { name: 'Camila Santos',    city: 'Lagarto',       product: 'iPhone 15 Pro 256GB',   model: 'iPhone 15 Pro' },
-    { name: 'Lucas Oliveira',   city: 'Itabaiana',     product: 'iPhone 14 256GB',       model: 'iPhone 14' },
-    { name: 'Ana Ferreira',     city: 'Aracaju',       product: 'iPhone 16 256GB',       model: 'iPhone 16' },
-    { name: 'Marcos Costa',     city: 'Estância',      product: 'iPhone 15 128GB',       model: 'iPhone 15' },
-    { name: 'Juliana Lima',     city: 'Simão Dias',    product: 'iPhone 14 128GB',       model: 'iPhone 14' },
-    { name: 'Pedro Alves',      city: 'Tobias Barreto','product': 'iPhone 15 Pro 256GB', model: 'iPhone 15 Pro' },
-    { name: 'Fernanda Rocha',   city: 'São Cristóvão', product: 'iPhone 16 128GB',       model: 'iPhone 16' },
-    { name: 'Thiago Mendes',    city: 'Lagarto',       product: 'iPhone 14 256GB',       model: 'iPhone 14' },
-    { name: 'Beatriz Souza',    city: 'Simão Dias',    product: 'iPhone 15 128GB',       model: 'iPhone 15' },
+    { name: 'Rafael Pereira',  city: 'Simão Dias',     product: 'iPhone 16 128GB',     model: 'iPhone 16' },
+    { name: 'Camila Santos',   city: 'Lagarto',        product: 'iPhone 15 Pro 256GB',  model: 'iPhone 15 Pro' },
+    { name: 'Lucas Oliveira',  city: 'Itabaiana',      product: 'iPhone 14 256GB',      model: 'iPhone 14' },
+    { name: 'Ana Ferreira',    city: 'Aracaju',        product: 'iPhone 16 256GB',      model: 'iPhone 16' },
+    { name: 'Marcos Costa',    city: 'Estância',       product: 'iPhone 15 128GB',      model: 'iPhone 15' },
+    { name: 'Juliana Lima',    city: 'Simão Dias',     product: 'iPhone 14 128GB',      model: 'iPhone 14' },
+    { name: 'Pedro Alves',     city: 'Tobias Barreto', product: 'iPhone 15 Pro 256GB',  model: 'iPhone 15 Pro' },
+    { name: 'Fernanda Rocha',  city: 'São Cristóvão',  product: 'iPhone 16 128GB',      model: 'iPhone 16' },
+    { name: 'Thiago Mendes',   city: 'Lagarto',        product: 'iPhone 14 256GB',      model: 'iPhone 14' },
+    { name: 'Beatriz Souza',   city: 'Simão Dias',     product: 'iPhone 15 128GB',      model: 'iPhone 15' },
   ];
 
   const TIMES = [
@@ -757,5 +757,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     showNext();
     setInterval(showNext, 38000 + Math.random() * 8000);
-  }, 8000);
+  }, 3000);
 })();
