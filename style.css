@@ -188,7 +188,7 @@ img { display: block; max-width: 100%; }
    HERO
    ===================== */
 .hero {
-  padding: 72px 24px 56px;
+  padding: 56px 24px 40px;
   text-align: center;
   border-bottom: 0.5px solid var(--border);
 }
@@ -368,10 +368,22 @@ img { display: block; max-width: 100%; }
    ===================== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   background: var(--border);
   min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1280px) {
+  .grid { grid-template-columns: repeat(5, 1fr); }
 }
 
 /* =====================
@@ -508,6 +520,25 @@ img { display: block; max-width: 100%; }
 
 .card-no-model-icon { font-size: 32px; opacity: 0.2; }
 .card-no-model-text { font-size: 12px; color: var(--text3); text-align: center; line-height: 1.7; }
+
+/* =====================
+   NO MODEL STRIP
+   ===================== */
+.no-model-strip {
+  padding: 20px 24px;
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--bg);
+}
+
+.no-model-text {
+  font-size: 12px;
+  color: var(--text3);
+}
 
 /* =====================
    ONLINE BAR
@@ -896,16 +927,48 @@ img { display: block; max-width: 100%; }
 /* =====================
    RESPONSIVE
    ===================== */
+/* Desktop max-width container */
+@media (min-width: 1400px) {
+  .nav { padding: 14px 48px; }
+  .hero { padding: 72px 48px 56px; }
+  .filters { padding: 16px 48px; }
+  .section-label { padding: 20px 48px 14px; }
+  .no-model-strip { padding: 20px 48px; }
+  .online-bar { padding: 12px 48px; }
+  .footer { padding: 24px 48px; }
+}
+
 @media (max-width: 480px) {
   .nav { padding: 12px 16px; }
-  .hero { padding: 48px 16px 40px; }
+  .hero { padding: 40px 16px 32px; }
   .filters { padding: 12px 16px; }
   .section-label { padding: 16px 16px 12px; }
-  .grid { grid-template-columns: repeat(2, 1fr); }
   .footer { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
   .nav-compare { display: none; }
 }
 
 @media (max-width: 360px) {
   .grid { grid-template-columns: 1fr; }
+}
+
+/* =====================
+   DESKTOP REFINEMENTS
+   ===================== */
+
+/* Esconde card "não encontrou" do grid em desktop — usa só a faixa */
+@media (min-width: 640px) {
+  .card-no-model { display: none; }
+}
+
+/* Card menor em desktop — mais informação visível */
+@media (min-width: 900px) {
+  .card { padding: 16px; }
+  .card-price { font-size: 16px; margin-bottom: 12px; }
+  .card-img { margin-bottom: 12px; }
+}
+
+/* Centraliza conteúdo em telas muito largas */
+@media (min-width: 1400px) {
+  .hero-title { font-size: 72px; }
+  .hero-sub { font-size: 15px; }
 }
