@@ -42,18 +42,18 @@ function saveCompare(list) {
 const DEFAULT_PRODUCTS = [
   {
     id: '1',
-    model: 'iPhone 13',
-    name: 'iPhone 13 128GB',
+    model: 'iPhone 14',
+    name: 'iPhone 14 128GB',
     color: 'Meia-noite',
     storage: '128GB',
     ram: '6GB',
     camera: '12MP',
-    battery: '3227mAh',
-    condition: 'Seminovo',
-    price: 2190,
-    priceOld: 2490,
+    battery: '3279mAh',
+    condition: 'Novo',
+    price: 2990,
+    priceOld: 3290,
     image: '',
-    description: 'iPhone 13 em excelente estado. Bateria com saúde acima de 85%. Desbloqueado para todas as operadoras.',
+    description: 'iPhone 14 novo, lacrado. Factory Unlocked — funciona com qualquer operadora. Chip A15 Bionic, tela Super Retina XDR 6.1".',
   },
   {
     id: '2',
@@ -68,10 +68,25 @@ const DEFAULT_PRODUCTS = [
     price: 3190,
     priceOld: 3490,
     image: '',
-    description: 'iPhone 14 novo, lacrado. Factory unlocked. Chip físico + eSIM. Garantia de 1 ano.',
+    description: 'iPhone 14 novo, lacrado. Factory Unlocked — funciona com qualquer operadora. Chip A15 Bionic, câmera dupla 12MP.',
   },
   {
     id: '3',
+    model: 'iPhone 15',
+    name: 'iPhone 15 128GB',
+    color: 'Preto',
+    storage: '128GB',
+    ram: '6GB',
+    camera: '48MP',
+    battery: '3877mAh',
+    condition: 'Novo',
+    price: 4190,
+    priceOld: 4590,
+    image: '',
+    description: 'iPhone 15 novo, lacrado. USB-C, chip A16 Bionic, câmera principal de 48MP. Factory Unlocked.',
+  },
+  {
+    id: '4',
     model: 'iPhone 15 Pro',
     name: 'iPhone 15 Pro 256GB',
     color: 'Titânio Natural',
@@ -83,22 +98,7 @@ const DEFAULT_PRODUCTS = [
     price: 4990,
     priceOld: 5490,
     image: '',
-    description: 'iPhone 15 Pro com câmera de 48MP, chip A17 Pro e corpo em titânio. Novo, lacrado.',
-  },
-  {
-    id: '4',
-    model: 'iPhone 14 Pro',
-    name: 'iPhone 14 Pro 256GB',
-    color: 'Dourado',
-    storage: '256GB',
-    ram: '6GB',
-    camera: '48MP',
-    battery: '3200mAh',
-    condition: 'Seminovo',
-    price: 4490,
-    priceOld: 4890,
-    image: '',
-    description: 'iPhone 14 Pro seminovo em ótimas condições. Câmera principal de 48MP. Bateria com saúde 88%.',
+    description: 'iPhone 15 Pro novo, lacrado. Corpo em titânio aeroespacial, chip A17 Pro, câmera 48MP com zoom 3x.',
   },
   {
     id: '5',
@@ -108,27 +108,27 @@ const DEFAULT_PRODUCTS = [
     storage: '128GB',
     ram: '8GB',
     camera: '48MP',
-    battery: '3650mAh',
+    battery: '3561mAh',
     condition: 'Novo',
     price: 5190,
     priceOld: 5490,
     image: '',
-    description: 'iPhone 16 lançamento 2024. Chip A18, câmera 48MP com zoom ótico 2x. Novo e lacrado.',
+    description: 'iPhone 16 novo, lacrado. Chip A18, câmera 48MP, botão de controle de câmera. Factory Unlocked.',
   },
   {
     id: '6',
-    model: 'iPhone 13',
-    name: 'iPhone 13 256GB',
-    color: 'Estelar',
+    model: 'iPhone 16',
+    name: 'iPhone 16 256GB',
+    color: 'Preto',
     storage: '256GB',
-    ram: '6GB',
-    camera: '12MP',
-    battery: '3227mAh',
-    condition: 'Seminovo',
-    price: 2490,
-    priceOld: 2790,
+    ram: '8GB',
+    camera: '48MP',
+    battery: '3561mAh',
+    condition: 'Novo',
+    price: 5490,
+    priceOld: 5990,
     image: '',
-    description: 'iPhone 13 256GB seminovo. Excelente custo-benefício. Desbloqueado, bateria 82%.',
+    description: 'iPhone 16 256GB novo, lacrado. Chip A18, câmera 48MP, Dynamic Island. Factory Unlocked.',
   },
 ];
 
@@ -233,7 +233,7 @@ function renderProducts() {
 
     return `
       <div class="card" onclick="openModal('${p.id}')">
-        <span class="card-badge ${p.condition === 'Novo' ? 'badge-new' : 'badge-used'}">${p.condition}</span>
+        <span class="card-badge ${p.condition === 'Novo' ? 'badge-new' : 'badge-new'}">${p.condition}</span>
         <div class="card-img">${imgContent}</div>
         <div class="card-model">${p.model}</div>
         <div class="card-name">${p.storage} · ${p.color}</div>
@@ -282,7 +282,7 @@ function openModal(id) {
     : getPhoneSVG(p.model, p.condition);
 
   document.getElementById('modal-img').innerHTML = imgContent;
-  document.getElementById('modal-category').textContent = p.model + ' · ' + p.condition;
+  document.getElementById('modal-category').textContent = p.model + ' · Lacrado';
   document.getElementById('modal-name').textContent = p.name + ' · ' + p.color;
   document.getElementById('modal-desc').textContent = p.description || '';
   document.getElementById('modal-price').textContent = formatPrice(p.price);
@@ -589,4 +589,94 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   resetTimer();
+})();
+
+/* =====================
+   HERO DOTS ANIMATION
+   ===================== */
+(function () {
+  const canvas = document.getElementById('hero-dots');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  const SEPARATION = 38;
+  let COLS, ROWS, dots, count = 0, raf;
+
+  function isDark() {
+    return document.documentElement.getAttribute('data-theme') !== 'light';
+  }
+
+  function resize() {
+    const hero = canvas.parentElement;
+    canvas.width  = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+    COLS = Math.ceil(canvas.width  / SEPARATION) + 2;
+    ROWS = Math.ceil(canvas.height / SEPARATION) + 2;
+    buildDots();
+  }
+
+  function buildDots() {
+    dots = [];
+    for (let ix = 0; ix < COLS; ix++) {
+      for (let iy = 0; iy < ROWS; iy++) {
+        dots.push({ ix, iy });
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const color = isDark() ? '255,255,255' : '0,0,0';
+
+    for (const { ix, iy } of dots) {
+      const x = ix * SEPARATION;
+      // sine wave Y offset — igual ao Three.js original
+      const wave = Math.sin((ix + count) * 0.3) * 6 + Math.sin((iy + count) * 0.5) * 6;
+      const y = iy * SEPARATION + wave;
+
+      // tamanho do ponto também oscila com a onda
+      const size = 1.2 + (Math.sin((ix + count) * 0.3) + Math.sin((iy + count) * 0.5) + 2) * 0.6;
+
+      // opacidade baseada na onda
+      const alpha = 0.3 + (Math.sin((ix + count) * 0.3) + 1) * 0.25;
+
+      ctx.beginPath();
+      ctx.arc(x, y, size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${color},${alpha.toFixed(2)})`;
+      ctx.fill();
+    }
+
+    count += 0.04;
+    raf = requestAnimationFrame(draw);
+  }
+
+  // Pausa animação quando fora da viewport para economizar GPU
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      if (!raf) draw();
+    } else {
+      cancelAnimationFrame(raf);
+      raf = null;
+    }
+  }, { threshold: 0.1 });
+
+  observer.observe(canvas.parentElement);
+
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(raf);
+    raf = null;
+    resize();
+    draw();
+  }, { passive: true });
+
+  // Atualizar cor ao trocar de tema
+  const themeObserver = new MutationObserver(() => {
+    cancelAnimationFrame(raf);
+    raf = null;
+    draw();
+  });
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  resize();
+  draw();
 })();

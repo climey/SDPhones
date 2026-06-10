@@ -445,10 +445,8 @@ img { display: block; max-width: 100%; }
 }
 
 .badge-new { background: #0d1f0d; color: #4ade80; border: 0.5px solid #1a3a1a; }
-.badge-used { background: #1a1a2e; color: #818cf8; border: 0.5px solid #2a2a4a; }
 
 [data-theme="light"] .badge-new { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
-[data-theme="light"] .badge-used { background: #ede9fe; color: #6d28d9; border-color: #ddd6fe; }
 
 .card-model {
   font-size: 9px;
@@ -1192,4 +1190,32 @@ img { display: block; max-width: 100%; }
 .banner-dot.active {
   width: 20px;
   background: #fff;
+}
+
+/* =====================
+   HERO DOTS CANVAS
+   ===================== */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+#hero-dots {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+[data-theme="light"] #hero-dots {
+  opacity: 0.18;
+}
+
+/* Garante que o conteúdo do hero fique acima do canvas */
+.hero > *:not(canvas) {
+  position: relative;
+  z-index: 1;
 }
