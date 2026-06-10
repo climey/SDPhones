@@ -186,7 +186,7 @@ function getPhoneSVG(model, condition) {
     'iPhone 16 Pro Max': ['#2a2a2a','#3a3a3a','#1a1a1a'],
   };
   const c = colors[model] || ['#222','#333','#1a1a1a'];
-  return `<svg viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:70%;height:70%;">
+  return `<svg viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:82%;height:82%;">
     <rect x="10" y="5" width="80" height="190" rx="18" fill="${c[0]}" stroke="${c[1]}" stroke-width="2"/>
     <rect x="18" y="16" width="64" height="138" rx="7" fill="${c[2]}"/>
     <rect x="42" y="8" width="16" height="4" rx="2" fill="${c[1]}"/>
