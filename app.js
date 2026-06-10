@@ -130,6 +130,36 @@ const DEFAULT_PRODUCTS = [
     image: '',
     description: 'iPhone 16 256GB novo, lacrado. Chip A18, câmera 48MP, Dynamic Island. Factory Unlocked.',
   },
+  {
+    id: '7',
+    model: 'iPhone 17 Pro Max',
+    name: 'iPhone 17 Pro Max 256GB',
+    color: 'Cosmic Orange',
+    storage: '256GB',
+    ram: '8GB',
+    camera: '48MP',
+    battery: '5000mAh',
+    condition: 'Novo',
+    price: 9490,
+    priceOld: 10490,
+    image: 'iphone17-orange-front.jpg',
+    description: 'iPhone 17 Pro Max novo, lacrado. Chip A19 Pro, tela OLED 6.9" ProMotion 120Hz, câmera tripla 48MP com zoom 8x, bateria recorde. Design unibody alumínio com vapor chamber. eSIM. Fotos reais do produto.',
+  },
+  {
+    id: '8',
+    model: 'iPhone 17 Pro Max',
+    name: 'iPhone 17 Pro Max 256GB',
+    color: 'Silver',
+    storage: '256GB',
+    ram: '8GB',
+    camera: '48MP',
+    battery: '5000mAh',
+    condition: 'Novo',
+    price: 9490,
+    priceOld: 10490,
+    image: 'iphone17-silver-front.jpg',
+    description: 'iPhone 17 Pro Max Silver novo, lacrado. Chip A19 Pro, tela OLED 6.9" ProMotion 120Hz, câmera tripla 48MP com zoom 8x. Design unibody alumínio. eSIM. Fotos reais do produto.',
+  },
 ];
 
 /* =====================
@@ -184,6 +214,7 @@ function getPhoneSVG(model, condition) {
     'iPhone 16': ['#e8e4dc','#ccc8c0','#f5f3ef'],
     'iPhone 16 Pro': ['#2a2a2a','#3a3a3a','#1a1a1a'],
     'iPhone 16 Pro Max': ['#2a2a2a','#3a3a3a','#1a1a1a'],
+    'iPhone 17 Pro Max': ['#d4520a','#b84208','#a33a06'],
   };
   const c = colors[model] || ['#222','#333','#1a1a1a'];
   return `<svg viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:82%;height:82%;">
@@ -696,6 +727,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'Fernanda Rocha',  city: 'São Cristóvão',  product: 'iPhone 16 128GB',      model: 'iPhone 16' },
     { name: 'Thiago Mendes',   city: 'Lagarto',        product: 'iPhone 14 256GB',      model: 'iPhone 14' },
     { name: 'Beatriz Souza',   city: 'Simão Dias',     product: 'iPhone 15 128GB',      model: 'iPhone 15' },
+    { name: 'Diego Nascimento', city: 'Simão Dias',    product: 'iPhone 17 Pro Max 256GB', model: 'iPhone 17 Pro Max' },
+    { name: 'Priscila Torres',  city: 'Lagarto',       product: 'iPhone 17 Pro Max 256GB', model: 'iPhone 17 Pro Max' },
   ];
 
   const TIMES = [
@@ -704,10 +737,11 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const MODEL_COLORS = {
-    'iPhone 14':     ['#2d1f4e','#4a3580'],
-    'iPhone 15':     ['#222','#333'],
-    'iPhone 15 Pro': ['#bdb8ae','#9e9990'],
-    'iPhone 16':     ['#e8e4dc','#ccc8c0'],
+    'iPhone 14':         ['#2d1f4e','#4a3580'],
+    'iPhone 15':         ['#222','#333'],
+    'iPhone 15 Pro':     ['#bdb8ae','#9e9990'],
+    'iPhone 16':         ['#e8e4dc','#ccc8c0'],
+    'iPhone 17 Pro Max': ['#d4520a','#b84208'],
   };
 
   function getPhoneSVG(model) {
