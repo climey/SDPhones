@@ -50,6 +50,58 @@
   </div>
 </section>
 
+
+<!-- BANNER CAROUSEL -->
+<div class="banner">
+  <div class="banner-track-wrap">
+    <div class="banner-track" id="banner-track">
+
+      <!-- Slide 1: Dark -->
+      <div class="banner-slide">
+        <div class="banner-slide-bg" style="background-color:#0a0a0a; background-image: url('https://images.unsplash.com/photo-1556656793-08538906a9f8?w=1400&q=80'); background-position: center right;"></div>
+        <div class="banner-slide-overlay" style="background: linear-gradient(to right, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.2));"></div>
+        <div class="banner-slide-content">
+          <div class="banner-slide-title">iPhones Premium</div>
+          <div class="banner-slide-sub">Novos e seminovos com garantia em Simão Dias</div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Azul -->
+      <div class="banner-slide">
+        <div class="banner-slide-bg" style="background-color:#0d1b2e; background-image: url('https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=1400&q=80'); background-position: center;"></div>
+        <div class="banner-slide-overlay" style="background: linear-gradient(to right, rgba(10,25,60,0.88) 40%, rgba(10,25,60,0.25));"></div>
+        <div class="banner-slide-content">
+          <div class="banner-slide-title">Frete no mesmo dia</div>
+          <div class="banner-slide-sub">Entregamos em Simão Dias e região rapidinho</div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Verde -->
+      <div class="banner-slide">
+        <div class="banner-slide-bg" style="background-color:#0a1f0a; background-image: url('https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=1400&q=80'); background-position: center;"></div>
+        <div class="banner-slide-overlay" style="background: linear-gradient(to right, rgba(5,30,10,0.88) 40%, rgba(5,30,10,0.25));"></div>
+        <div class="banner-slide-content">
+          <div class="banner-slide-title">Cobrimos qualquer oferta</div>
+          <div class="banner-slide-sub">Achou mais barato? A gente cobre.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Arrows -->
+    <button class="banner-arrow banner-arrow-prev" onclick="bannerPrev()" aria-label="Anterior">&#8249;</button>
+    <button class="banner-arrow banner-arrow-next" onclick="bannerNext()" aria-label="Próximo">&#8250;</button>
+
+    <!-- Dots -->
+    <div class="banner-dots" id="banner-dots">
+      <button class="banner-dot active" onclick="bannerGo(0)"></button>
+      <button class="banner-dot" onclick="bannerGo(1)"></button>
+      <button class="banner-dot" onclick="bannerGo(2)"></button>
+    </div>
+  </div>
+</div>
+
+
 <!-- FILTROS -->
 <section class="filters" id="catalog">
   <input class="filter-search" id="search" type="search" placeholder="Buscar modelo..." oninput="renderProducts()"/>

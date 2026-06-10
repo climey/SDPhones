@@ -225,7 +225,7 @@ function renderProducts() {
 
   const compare = getCompare();
 
-  grid.innerHTML = filtered.map(p => {
+  const cards = filtered.map(p => {
     const inCompare = compare.includes(p.id);
     const imgContent = p.image
       ? `<img src="${p.image}" alt="${p.name}" loading="lazy"/>`
@@ -248,13 +248,9 @@ function renderProducts() {
         </div>
       </div>
     `;
-  }).join('') + `
-    <div class="card card-no-model">
-      <div class="card-no-model-icon">📱</div>
-      <div class="card-no-model-text">Não encontrou<br>o modelo?</div>
-      <a href="https://wa.me/5579999999999?text=Olá! Não encontrei o modelo que procuro." target="_blank" class="btn-secondary" style="font-size:10px;padding:8px 16px;border-radius:20px;margin-top:4px;">Falar no WhatsApp</a>
-    </div>
-  `;
+  }).join('');
+
+  grid.innerHTML = cards;
 }
 
 /* =====================
@@ -552,3 +548,45 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
   updateCompareBadge();
 });
+
+/* =====================
+   NAV GLASSMORPHISM
+   ===================== */
+(function() {
+  const nav = document.getElementById('nav');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }, { passive: true });
+})();
+
+/* =====================
+   BANNER CAROUSEL
+   ===================== */
+(function() {
+  const track = document.getElementById('banner-track');
+  const dots = document.querySelectorAll('.banner-dot');
+  if (!track) return;
+
+  let current = 0;
+  const total = 3;
+  let timer;
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  window.bannerNext = () => { goTo(current + 1); resetTimer(); };
+  window.bannerPrev = () => { goTo(current - 1); resetTimer(); };
+  window.bannerGo   = (i) => { goTo(i); resetTimer(); };
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+
+  resetTimer();
+})();
